@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Güvenlik İhlali</title>
+<style>
+  body{
+    margin:0;
+    background:#000;
+    color:#0f0;
+    font-family:Consolas,monospace;
+    overflow:hidden;
+  }
+  .center{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:90%;max-width:650px;
+    text-align:center;
+    animation:fadeIn 1s ease forwards;
+    opacity:0;
+  }
+  @keyframes fadeIn{to{opacity:1}}
+  h1{
+    color:#ff2e2e;
+    font-size:26px;
+    margin-bottom:12px;
+    text-shadow:0 0 10px #ff0000;
+  }
+  .box{
+    border:1px solid rgba(255,0,0,0.4);
+    padding:15px;
+    border-radius:10px;
+    background:rgba(0,0,0,0.6);
+    margin-top:10px;
+  }
+  .progress{
+    width:100%;
+    height:14px;
+    background:#111;
+    border-radius:10px;
+    overflow:hidden;
+    margin:10px 0;
+  }
+  .progress i{
+    display:block;
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#600,#f00);
+    animation:load 5s linear forwards;
+  }
+  @keyframes load{to{width:100%}}
+  .term{
+    text-align:left;
+    font-size:12px;
+    line-height:15px;
+    height:150px;
+    overflow:auto;
+    margin-top:10px;
+  }
+  .popup{
+    position:fixed;
+    left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    background:#000;
+    border:2px solid #ff2e2e;
+    padding:18px;
+    width:85%;
+    max-width:400px;
+    border-radius:12px;
+    box-shadow:0 0 20px #f00;
+    display:none;
+  }
+  .popup h2{
+    margin-top:0;
+    color:#ff3f3f;
+    text-shadow:0 0 8px #f00;
+  }
+  button{
+    margin-top:14px;
+    padding:8px 14px;
+    background:#222;
+    color:#0f0;
+    border:0;
+    border-radius:8px;
+    cursor:pointer;
+    font-family:Consolas,monospace;
+  }
+</style>
+</head>
+<body>
+
+<div class="center">
+  <h1>⚠️ VIVO Y19S GÜVENLİK İHLALİ</h1>
+  <div class="box">
+    <p><strong>Cihaz Sahibi:</strong> Mami</p>
+    <p><strong>Model:</strong> Vivo Y19s</p>
+    <p>Yetkisiz erişim <span style="color:#ff3f3f">aktif</span> olarak algılandı.</p>
+
+    <div class="term" id="term"></div>
+
+    <div class="progress">
+      <i></i>
+    </div>
+
+    <p style="color:#ff2e2e">Kritik dosyalar taranıyor...</p>
+
+    <button onclick="openPop()">Detaylı Log</button>
+  </div>
+</div>
+
+<div class="popup" id="pop">
+  <h2>ROOT Yetkisi Tehlikede</h2>
+  <p>Cihazın güvenlik anahtarları çözümleniyor.</p>
+  <p>Devam etmek istiyor musunuz?</p>
+  <button onclick="closePop()">Kapat</button>
+</div>
+
+<script>
+  // Matrix tarzı terminal spam
+  const term = document.getElementById("term");
+  const lines = [
+    "[TRACE] bağlantı sağlanıyor...",
+    "[WARN] sistem kimlik doğrulaması atlandı",
+    "[ERROR] vivo/sec_key/override.cpp (403)",
+    "[INFO] external access: /storage/emulated/0",
+    "[ALERT] unauthorized token injected",
+    "[TRACE] checking Mami_Y19s device id...",
+    "[ERROR] security flag mismatch",
+    "[INFO] data stream → 110101010010101",
+    "[INFO] firewall bypassed",
+    "[CRITICAL] kernel mod aktivasyonu başarısız",
+    "[ALERT] encryption key override",
+    "[TRACE] remote control handshake..."
+  ];
+
+  let i = 0;
+  setInterval(()=>{
+    if(i < lines.length){
+      term.innerHTML += lines[i] + "<br>";
+      term.scrollTop = term.scrollHeight;
+      i++;
+    }
+  },180);
+
+  // Popup
+  function openPop(){
+    document.getElementById("pop").style.display="block";
+  }
+  function closePop(){
+    document.getElementById("pop").style.display="none";
+  }
+
+  // Otomatik fullscreen
+  setTimeout(()=>{
+    if(document.documentElement.requestFullscreen){
+      try{ document.documentElement.requestFullscreen(); }catch(e){}
+    }
+  },1200);
+</script>
+
+</body>
+</html>
